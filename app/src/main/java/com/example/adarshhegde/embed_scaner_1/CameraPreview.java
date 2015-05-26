@@ -1,7 +1,5 @@
 package com.example.adarshhegde.embed_scaner_1;
 
-import java.io.IOException;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.hardware.Camera;
@@ -10,6 +8,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -17,6 +16,8 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
+
+import java.io.IOException;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mHolder;
@@ -107,7 +108,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         	
         	if (mDialog.isShowing())
         		return;
-        	
+            Log.i("CamPreCallback","left" + mLeft);
+            Log.i("CamPreCallback","top" + mTop);
+            Log.i("CamPreCallback","width" + mWidth);
+            Log.i("CamPreCallback","Areawidth" + mAreaWidth);
+            Log.i("CamPreCallback","AreaHeight" + mAreaHeight);
         	LuminanceSource source = new PlanarYUVLuminanceSource(data, mWidth, mHeight, mLeft, mTop, mAreaWidth, mAreaHeight, false);
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(
               source));
@@ -128,10 +133,23 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     };
     
     public void setArea(int left, int top, int areaWidth, int width) {
-    	double ratio = width / mWidth;
+        Log.i("ICamPreSA","left" + left);
+        Log.i("ICamPreSA","top" + top);
+        Log.i("ICamPreSA","width" + width);
+        Log.i("ICamPreSA","Areawidth" + mAreaWidth);
+        double ratio = width / mWidth;
     	mLeft = (int) (left / (ratio + 1));
     	mTop = (int) (top / (ratio + 1));
+        //mTop = top;
     	mAreaHeight = mAreaWidth = mWidth - mLeft * 2;
+        Log.i("CamPreSA","left" + mLeft);
+        Log.i("CamPreSA","top" + mTop);
+        Log.i("CamPreSA","width" + mWidth);
+        Log.i("CamPreSA","Areawidth" + mAreaWidth);
+        //mLeft = left;
+        //mTop = top;
+        //mAreaHeight = mAreaWidth = areaWidth;
+        Log.i("CamPre","Area set");
     }
     
 }

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class HoverView extends View {
@@ -22,10 +23,22 @@ public class HoverView extends View {
 	public void update(int width, int height) {
 		int centerX = width / 2;
 		int centerY = height / 2;
-		mLeft = centerX - 200;
-		mRight = centerX + 200;
-		mTop = centerY - 200;
-		mBottom = centerY + 200;
+        if ((centerX - 200) < 0 || (centerY - 200) < 0 || (centerX + 200) > width || (centerY + 200) > 0)
+        {
+            //For low resolution mobiles.
+            Log.i("Hoview","Low resolution mobile");
+            mLeft = centerX - 100;
+            mRight = centerX + 100;
+            mTop = centerY - 100;
+            mBottom = centerY + 100;
+
+        }
+        else {
+            mLeft = centerX - 200;
+            mRight = centerX + 200;
+            mTop = centerY - 200;
+            mBottom = centerY + 200;
+        }
 		invalidate();
 	}
 	
@@ -46,6 +59,6 @@ public class HoverView extends View {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
 
-		canvas.drawRect(mLeft, mTop, mRight, mBottom, mPaint);
+            canvas.drawRect(mLeft, mTop, mRight, mBottom, mPaint);
 	}
 }
